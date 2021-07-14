@@ -1,0 +1,23 @@
+<div class="search">
+  <label for="food_name"> Search food: </label>
+  <input id="food_name" placeholder="Enter food name" type="text" [(ngModel)]="pattern">
+  <hr class="style-search">
+</div>
+
+<div class="food">
+  <ul>
+    <li *ngFor="let item of foodList | filter:'name':pattern" (click)="addItemToMenu(item)">
+      <img class="mediana" src={{item.image}} />
+      <h3>{{item.name}}</h3>
+      <hr>
+      <p>{{item.calories}} calories</p>
+    </li>
+  </ul>
+</div>
+<div class="menu">
+  <h3> Menu diario </h3>
+  <hr>
+  <p> Número Total Calories: {{num_calories}}</p>
+  <ul #ulMenu></ul>
+  <!-- <i class="fas fa-trash-alt"></i> -->
+</div>
