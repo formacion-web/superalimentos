@@ -1,8 +1,45 @@
 <div class="search">
   <label for="food_name"> Search food: </label>
   <input id="food_name" placeholder="Enter food name" type="text" [(ngModel)]="pattern">
+  <div class="add-item">
+    <h2> Add new food</h2>
+    <fa-icon [icon]=plusCircle size="lg" [styles]="{'color': 'blue'}" (click)="toogleAddForm()"></fa-icon>
+  </div>
+
+<!-- <fa-icon [icon]="['fas', 'coffee']" size="xs"></fa-icon>
+<fa-icon [icon]="['fas', 'coffee']" size="lg"></fa-icon>
+<fa-icon [icon]="['fas', 'coffee']" size="6x"></fa-icon>
+   -->
   <hr class="style-search">
 </div>
+
+<div class="form" *ngIf="add_form; else elseBlock"></div>
+<ng-template #elseBlock>
+<div>
+  <form [formGroup]='formGroup' (ngSubmit)="onSubmit()">
+    <p>
+      <label>* Food Name:</label>
+      <input class="form-input" type="text" placeholder="enter food name" formControlName='name'>
+    </p>
+    <p>
+      <label>* Calories:</label>
+      <input class="form-input" type="number" placeholder="enter number of calories" formControlName='calories'>
+    </p>
+    <p>
+      <label>URL Image Food:</label>
+      <input class="form-input" type="text" placeholder="enter URL" formControlName='image'>
+    </p>
+    <p>
+      <label>Quantity:</label>
+      <input class="form-input" type="number" placeholder="enter quantity" formControlName='quantity'>
+    </p>
+    <p>
+      <button class="skewBtn" type="submit" [disabled]="!formGroup.valid">Submit</button>
+    </p>
+  </form>
+  <hr class="style-search">
+</div>
+</ng-template>
 
 <div class="food">
   <ul>
@@ -15,9 +52,15 @@
   </ul>
 </div>
 <div class="menu">
-  <h3> Menu diario </h3>
+  <h3> Daily menu </h3>
   <hr>
-  <p> Número Total Calories: {{num_calories}}</p>
-  <ul #ulMenu></ul>
+  <p> Total Number Calories: {{num_calories}}</p>
+  <ul>
+    <!-- <li class ="menu_item" *ngFor="let item of menulist; let i = index" (click)="menulist.splice(i, 1)">  -->
+    <li class="menu-item" *ngFor="let item of menulist; let i = index" (click)="deleteItemFromMenu(item)">
+      <h3>{{item.name}}</h3>
+      <fa-icon [icon]=trashIcon [styles]="{'color': 'blue'}"></fa-icon>
+    </li>
+  </ul>
   <!-- <i class="fas fa-trash-alt"></i> -->
 </div>
