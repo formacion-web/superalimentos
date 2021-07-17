@@ -1,0 +1,46 @@
+
+<div class="content">
+    <div class="buscar">
+        <p>Buscar</p>
+        <input type="text" [(ngModel)]="buscar">
+    </div>
+    <div class="addItem">
+        <input type="button" value="Añadir comida" (click)="toggleForm()">
+    </div>
+
+    <ul class="foodStore">
+        <form *ngIf="toggleform" [formGroup]='formGroup' (ngSubmit)="onSubmit()">
+            <p>
+              <label>Nombre:*</label>
+              <input type="text" formControlName='name'>
+            </p>
+            <p>
+              <label>Calories:*</label>
+              <input type="number" formControlName='calories'>
+            </p>
+            <p>
+              <label>URL imagen: </label>
+              <input type="text" formControlName='image'>
+            </p>
+            <p>
+              <button type="submit" [disabled]="!formGroup.valid">Submit</button>
+            </p>
+          </form>
+
+        <li *ngFor="let food of foodList | filter:'name':buscar"> 
+            <img src="{{food.image}}">
+            <div class="info">
+                <h1>{{food.name}}</h1>
+                <h2>calorias: {{food.calories}}</h2>
+                <input type="button" (click)="addToday(food)" value="+">
+                <input type="number" [value]="food.quantity">
+            </div>
+        </li>
+    </ul>
+    <h1>Comida de hoy <strong>{{calorias}} cal.</strong></h1>
+    <ul class="today">
+        <li *ngFor="let food of foodToday">
+            <p><img src="{{food.image}}" width="20" height="20">   {{food.name}} <strong>x</strong> {{food.quantity}}</p>
+        </li>
+    </ul>
+</div>
